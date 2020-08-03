@@ -34,6 +34,7 @@ List<Container> _buildGridTileList(int count,context) {
                 children: <Widget>[
                   Text(menuLists[index]['name']),
                 ],
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               ),
             ),
           ),

@@ -158,7 +158,7 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
                 map['phoneNumber']=_phoneNumber;
                 map['address']=_address;
                 map['purpose']=_purpose;
-                map['imageFile']=_imageFile;
+                map['imageFilePath']=_imageFile.path;
                 submitApplication(map);
               },
             )

@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 
 void submitApplication(map) async {
   try{
-    FormData formData;
-    formData = FormData.fromMap(map);
+    map['file'] =  await MultipartFile.fromFile(map['imageFilePath']);
+    FormData formData = FormData.fromMap(map);
     print(formData);
     Dio dio = new Dio();
-    Response response = await dio.post<String>('http://47.102.213.188:5000/api/application/submitapplication',data: formData);
+    Response response = await dio.post('http://172.31.73.155:5000/api/application/submitapplication',data: formData);
     print(response);
   }catch(e){
     print(e);
