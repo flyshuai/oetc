@@ -8,7 +8,7 @@ final List<Map> menuLists = [
     "name": "进入申请",
   },
   {
-    "name": "退出记录",
+    "name": "退出拍照",
   },
 ];
 List<Container> _buildGridTileList(int count,context) {

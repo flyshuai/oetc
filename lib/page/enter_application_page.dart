@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,13 +54,16 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: new AppBar(
+          title: new Text('进入申请')
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 50.0),
+            SizedBox(height: 20.0),
             TextField(
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
@@ -147,7 +149,7 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
               minWidth: 800,
               textColor: Colors.white,
               child: new Text('提交申请'),
-              onPressed: () {
+              onPressed: () async {
                 print(_name);
                 print(_phoneNumber);
                 print(_address);
@@ -159,7 +161,32 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
                 map['address']=_address;
                 map['purpose']=_purpose;
                 map['imageFilePath']=_imageFile.path;
-                submitApplication(map);
+                bool isApplication = await submitApplication(map);
+                if(isApplication){
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return new AlertDialog(
+                          title: new Text('标题'),
+                          content: new SingleChildScrollView(
+                            child: new ListBody(
+                              children: <Widget>[
+                                new Text('申请进入成功，请等待批复'),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text('确定'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                  );
+                }
               },
             )
           ],

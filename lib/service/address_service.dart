@@ -8,7 +8,7 @@ Future<List<Map>> getAddress() async {
     List<Map> list = new List<Map>();
     response.data.forEach((v) {
       Map map = new Map();
-      map["addressName"] = v["addressName"];
+      map["addressName"] = v["accessControlAddressName"];
       map["code"] = v["code"];
       list.add(map);
     });
