@@ -1,22 +1,19 @@
 import 'package:dio/dio.dart';
 
-Future<Map> submitApplication(map) async {
+Future<Map> submitExitPhoto(map) async {
   Map returnMap = new Map();
   try{
     map['file'] =  await MultipartFile.fromFile(map['imageFilePath']);
     FormData formData = FormData.fromMap(map);
-    print(formData);
     Dio dio = new Dio();
-    Response response = await dio.post('http://172.31.73.155:5000/api/application/submitapplication',data: formData);
-//    print(response);
+    Response response = await dio.post('http://172.31.73.155:5000/api/application/submitexitphoto',data: formData);
     returnMap['success'] = false;
     if(response.data['success']){
       returnMap['success'] = true;
-      returnMap['code'] = response.data['data']['recordCode'];
-      return returnMap;
     }else{
-      return returnMap;
+      returnMap['msg'] = response.data['msg'];
     }
+    return returnMap;
   }catch(e){
     print(e);
     return returnMap;

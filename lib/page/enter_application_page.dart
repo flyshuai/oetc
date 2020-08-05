@@ -149,20 +149,15 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
               minWidth: 800,
               textColor: Colors.white,
               child: new Text('提交申请'),
-              onPressed: () async {
-                print(_name);
-                print(_phoneNumber);
-                print(_address);
-                print(_purpose);
-                print(_imageFile);
+              onPressed: () async {;
                 Map<String,dynamic> map = new Map();
                 map['name']=_name;
                 map['phoneNumber']=_phoneNumber;
                 map['address']=_address;
                 map['purpose']=_purpose;
                 map['imageFilePath']=_imageFile.path;
-                bool isApplication = await submitApplication(map);
-                if(isApplication){
+                Map isApplication = await submitApplication(map);
+                if(isApplication['success']){
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -171,7 +166,7 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
                           content: new SingleChildScrollView(
                             child: new ListBody(
                               children: <Widget>[
-                                new Text('申请进入成功，请等待批复'),
+                                new Text('申请进入成功,您的申请码为：'+ isApplication['code']+"请等待管理员批复"),
                               ],
                             ),
                           ),

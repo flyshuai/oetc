@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 
 import 'enter_application_page.dart';
+import 'exit_photo_page.dart';
 final List<Map> menuLists = [
   {
     "name": "进入申请",
+    "url":new EnterApplication()
   },
   {
     "name": "退出拍照",
+    "url":new ExitPhoto()
   },
 ];
 List<Container> _buildGridTileList(int count,context) {
@@ -22,7 +25,7 @@ List<Container> _buildGridTileList(int count,context) {
             onTap: () {
               Navigator.push(
                 context,
-                new MaterialPageRoute(builder: (context) => new EnterApplication()),
+                new MaterialPageRoute(builder: (context) =>menuLists[index]['url']),
               );
             },
             child: Container(
