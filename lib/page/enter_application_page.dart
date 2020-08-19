@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:oetc/model/LoadingDialog.dart';
 import 'package:oetc/service/address_service.dart';
 import 'package:oetc/service/application_service.dart';
 
@@ -149,7 +150,15 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
               minWidth: 800,
               textColor: Colors.white,
               child: new Text('提交申请'),
-              onPressed: () async {;
+              onPressed: () async {
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return new LoadingDialog(
+                        text: "提交申请中",
+                      );
+                    });
                 Map<String,dynamic> map = new Map();
                 map['name']=_name;
                 map['phoneNumber']=_phoneNumber;
@@ -158,6 +167,7 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
                 map['imageFilePath']=_imageFile.path;
                 Map isApplication = await submitApplication(map);
                 if(isApplication['success']){
+                  Navigator.pop(context);
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -166,7 +176,7 @@ class _EnterApplicationState extends State<EnterApplication> with SingleTickerPr
                           content: new SingleChildScrollView(
                             child: new ListBody(
                               children: <Widget>[
-                                new Text('申请进入成功,您的申请码为：'+ isApplication['code']+"请等待管理员批复"),
+                                new Text('申请进入成功,您的申请码为:'+ isApplication['code']+"  请等待管理员批复"),
                               ],
                             ),
                           ),

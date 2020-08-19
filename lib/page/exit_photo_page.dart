@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:oetc/model/LoadingDialog.dart';
 import 'package:oetc/service/exit_service.dart';
 
 
@@ -66,12 +67,21 @@ class _ExitPhotoState extends State<ExitPhoto> {
                   textColor: Colors.white,
                   child: new Text('提交'),
                   onPressed: () async {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return new LoadingDialog(
+                            text: "提交申请中",
+                          );
+                        });
                     Map<String,dynamic> map = new Map();
                     map['recordCode']=_code;
                     map['imageFilePath']=_imageFile.path;
                     Map isSuccess = await submitExitPhoto(map);
                     print(isSuccess);
                     if(isSuccess['success']){
+                      Navigator.pop(context);
                       showDialog(
                           context: context,
                           builder: (BuildContext context){

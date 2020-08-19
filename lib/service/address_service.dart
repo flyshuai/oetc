@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 Future<List<Map>> getAddress() async {
   try {
     Dio dio = new Dio();
-    Response response = await Dio().get("http://172.31.73.155:5000/api/address");
+    Response response = await Dio().get("http://47.102.213.188:5000/api/address");
     List<Map> list = new List<Map>();
     response.data.forEach((v) {
       Map map = new Map();
